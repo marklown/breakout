@@ -76,15 +76,20 @@ void list_remove(list_t** head_ref, void* data, size_t data_size)
 void list_compare_remove(list_t** head_ref, void* data, int(*compare_func)(void*,void*))
 {
 	list_t* head = *head_ref;
-	if ((*compare_func)(head->data,data) == 0) {/* Call the provided comparison func */
-		*head_ref = head->next;
-		free(head->data);
-		free(head);
-	} else {
+	if ((*compare_func)(head->data,data) == 0) {		/* head holds the data */
+		if (head->next == NULL) {						/* head is the only node */
+			free(head->data);
+			head->data = NULL;
+		} else {										/* head is not the only node */
+			*head_ref = head->next;
+			free(head->data);
+			free(head);
+		}
+	} else {											/* head does not hold the data */
 		list_t* prev = head;
 		list_t* next = head->next;
 		while (next != NULL) {
-			if ((*compare_func)(next->data,data) == 0) {/* Call the provided comparison func */
+			if ((*compare_func)(next->data,data) == 0) {
 				prev->next = next->next;
 				free(next->data);
 				free(next);	
