@@ -1,0 +1,5 @@
+*.swp
+*.o
+breakout
+tags
+scores.txt
