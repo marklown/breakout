@@ -7,6 +7,7 @@ TODO:
 - Power-ups? Multi-ball, speed, paddle-size
 - Balance, it gets too hard too fast
 - Color changing ball based on what brick it hit?
+- Bricks explode when hit
 
 */
 
@@ -14,6 +15,7 @@ TODO:
 #include "gui.h"
 #include "linked_list.h"
 #include "scores.h"
+#include "util.h"
 #include "SDL_FontCache.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
@@ -133,6 +135,9 @@ void game_loop(void)
     bool running = true;
 
     setup_new_game();
+
+	SDL_Rect r = make_rect(100, 200, 100, 25);
+	gui_add_text_box(&r, "test");
 
     while (running) {
         SDL_Event event;
