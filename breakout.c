@@ -134,13 +134,6 @@ void game_loop(void)
 
     setup_new_game();
 
-	SDL_Rect button_rect;
-	button_rect.x = 0;
-	button_rect.y = 300;
-	button_rect.w = 128;
-	button_rect.h = 64;
-	gui_add_button(&button_rect, "label", &on_clicked);
-
     while (running) {
         SDL_Event event;
         SDL_PollEvent(&event);
@@ -411,7 +404,7 @@ void render_game(void)
 	if (show_high_scores) render_high_scores();
 	else render_ball();
     render_hud();
-	gui_render(renderer);
+	gui_render(renderer, font);
     SDL_RenderPresent(renderer);
 }
 
@@ -431,28 +424,9 @@ void clear_msg(void)
     message = "";
 }
 
-#define C
-#ifdef C
 int main(int argc, char* argv[])
 {
-	list_t* list = list_create();
-	for (int i=0;i<3;i++) {
-		int data = i;
-		list_add(&list,&data,sizeof(int));
-	}	
-	size_t count = list_length(list);
-	int data = 1;
-	list_remove(&list, &data, sizeof(int));
-	count = list_length(list);
-	data = 2;
-	list_remove(&list, &data, sizeof(int));
-	count = list_length(list);
-	data = 0;
-	list_remove(&list, &data, sizeof(int));
-	count = list_length(list);
-	list_destroy(&list);
     init_window();
     game_loop();
     close_window();
 }
-#endif
